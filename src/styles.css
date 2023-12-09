@@ -1,0 +1,36 @@
+/* Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+body {
+    min-height: 100vh;
+}
+
+img, picture, svg, video {
+    display: block;
+    max-width: 100%;
+}
+
+/* Footer */
+footer {
+    grid-row: 5;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.fa-square-github,
+.fa-square-github:active,
+.fa-square-github:visited, 
+a {
+    color: white;
+    text-decoration: none;
+}
