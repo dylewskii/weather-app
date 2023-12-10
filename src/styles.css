@@ -1,4 +1,4 @@
-/* Reset */
+/* --- Reset --- */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -18,13 +18,51 @@ img, picture, svg, video {
     max-width: 100%;
 }
 
-/* Footer */
+/* --- Custom --- */
+:root {
+    --dark-mode-bg-color: hsl(0, 0%, 12%);
+    --main-font-color: hsl(0, 0%, 100%);
+}
+
+/* --- Base --- */
+body {
+    grid-template-rows: 10% 10% 60% 10% 10%;
+    background-color: var(--dark-mode-bg-color);
+}
+
+h1, h2, h3, p, a, input{
+    color: var(--main-font-color);
+}
+
+/* --- Main --- */
+header {
+    grid-row: 1;
+    border: 1px solid blue;
+}
+
+.searchbox {
+    grid-row: 2;
+    border: 1px solid green;
+}
+
+.dashboard {
+    grid-row: 3;
+    border: 1px solid yellow;
+}
+
+.dashboard {
+    grid-row: 3;
+    border: 1px solid yellow;
+}
+
+.sun-info {
+    grid-row: 4;
+}
+
 footer {
     grid-row: 5;
-    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
 }
 
 .fa-square-github,
