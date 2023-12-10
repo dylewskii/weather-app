@@ -18,10 +18,20 @@ img, picture, svg, video {
     max-width: 100%;
 }
 
-/* --- Custom --- */
+/* --- Fonts & Custom Properties --- */
 :root {
     --dark-mode-bg-color: hsl(0, 0%, 12%);
     --main-font-color: hsl(0, 0%, 100%);
+}
+
+@font-face {
+    font-family: "heading-font";
+    src: url("./assets/fonts/Afacad-Bold.ttf");
+}
+
+@font-face {
+    font-family: "body-font";
+    src: url("./assets/fonts/Afacad-VariableFont_wght.ttf");
 }
 
 /* --- Base --- */
@@ -30,29 +40,109 @@ body {
     background-color: var(--dark-mode-bg-color);
 }
 
-h1, h2, h3, p, a, input{
+h1, h2, h3, p, a, input {
     color: var(--main-font-color);
 }
 
 /* --- Main --- */
 header {
     grid-row: 1;
-    border: 1px solid blue;
+    padding: 1rem 0 1rem 2rem;
+}
+
+header h1 {
+    font-family: "heading-font";
+    font-size: 4rem;
+}
+
+.searchbox-wrapper {
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
 }
 
 .searchbox {
+    width: 80%;
+    height: 40px;
+    background-color: hsl(0, 0%, 16%);
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.searchbox > input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    padding: 0 20px;
+    width: 80%;
+    height: 40px;
+    background-color: hsl(0, 0%, 16%);
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.searchbox > input:focus {
+    outline: none;
+}
+
+.searchbox > input::placeholder {
+    color: hsl(0, 0%, 44%);
+    font-family: "body-font";
+}
+
+.searchbox > .search-btn {
+    font-family: "body-font";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    /* background: linear-gradient(to right, rgb(248,98,227), rgb(61,99,241)); */
+    background: linear-gradient(to right, rgb(254,122,61), rgb(255,55,53));
+    z-index: 100;
+    cursor: pointer;
+}
+
+/* .searchbox {
     grid-row: 2;
-    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+    width: 60%;
+    height: 40px;
+    background-color: hsl(0, 0%, 16%);
+    border-radius: 20px;
+}
+
+.searchbox > input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    padding: 0 10px;
+}
+
+.searchbox > input:focus {
+    outline: none;
+}
+
+.searchbox > input::placeholder {
+    color: hsl(0, 0%, 44%);
+    font-family: "body-font";
+} */
+
+.dashboard {
+    grid-row: 3;
 }
 
 .dashboard {
     grid-row: 3;
-    border: 1px solid yellow;
-}
-
-.dashboard {
-    grid-row: 3;
-    border: 1px solid yellow;
 }
 
 .sun-info {
