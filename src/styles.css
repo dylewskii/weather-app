@@ -116,8 +116,8 @@ header h1 {
     border: none;
     border-radius: 20px;
     color: var(--main-font-color);
-    /* background: linear-gradient(to right, rgb(248,98,227), rgb(61,99,241)); */
-    background: linear-gradient(to right, rgb(254,122,61), rgb(255,55,53));
+    background: linear-gradient(to right, rgb(248,98,227), rgb(61,99,241));
+    /* background: linear-gradient(to right, rgb(254,122,61), rgb(255,55,53)); */
     z-index: 100;
     cursor: pointer;
 }
@@ -138,12 +138,13 @@ header h1 {
     width: 90%;
     height: 38%;
     padding: 1rem;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    -webkit-backdrop-filter: blur(10px);
     margin-bottom: 1rem;
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14.5px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(14.5px);
 }
 
 .icon-box {
