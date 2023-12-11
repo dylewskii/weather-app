@@ -101,9 +101,12 @@ header h1 {
 .searchbox > input::placeholder {
     color: var(--secondary-font-color);
     font-family: "body-font";
+    font-size: 1.2rem;
 }
 
 .searchbox > .search-btn {
+    display: grid;
+    place-items: center;
     font-family: "body-font";
     position: absolute;
     top: 0;
@@ -143,11 +146,18 @@ header h1 {
     margin-bottom: 1rem;
 }
 
-.icon {
+.icon-box {
     grid-column: 1;
+    display: grid;
+    place-items: center;
 }
 
-.info {
+.icon {
+    width: 125px;
+    height: 125px;
+}
+
+.info-box {
     grid-column: 2;
 }
 
