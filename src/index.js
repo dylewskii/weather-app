@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import "./styles.css";
 // eslint-disable-next-line no-unused-vars
 import search from "./assets/icons/search.png";
@@ -32,11 +33,12 @@ const weatherInfo = {
 };
 
 const getWeatherData = async (city) => {
-    const api = `https://api.weatherapi.com/v1/current.json?key=d04037fa261e40e39e0142607230612&q=${city}`;
-    const response = await fetch(api, {mode: "cors"});
-    const data = await response.json();
+    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=11111111&q=${city}&aqi=yes`;
+    const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
+    const forecastWeatherData = await forecastWeatherResponse.json();
+    console.log(forecastWeatherData)
 
-    return data;
+    return forecastWeatherData;
 }
 
 const saveWeatherData = async (city) => {
@@ -46,14 +48,14 @@ const saveWeatherData = async (city) => {
             weatherInfo.location = [data.location.name, data.location.region];
             weatherInfo.description = data.current.condition.text;
             weatherInfo.temperature = data.current.temp_c;
-            weatherInfo.airQuality = null;
+            weatherInfo.airQuality = data.current.air_quality["us-epa-index"];
             weatherInfo.pressure = data.current.pressure_mb;
             weatherInfo.uv = data.current.uv;
             weatherInfo.precipitation = data.current.precip_mm;
             weatherInfo.wind = data.current.wind_kph;
-            weatherInfo.visibility = data.current.wind_kph;
-            weatherInfo.sunrise = null;
-            weatherInfo.sunset = null;
+            weatherInfo.visibility = data.current.vis_km;
+            weatherInfo.sunrise = data.forecast.forecastday[0].astro.sunrise;
+            weatherInfo.sunset = data.forecast.forecastday[0].astro.sunset;
         })
         .catch((err) => {
             console.log("Error Retrieving Weather Data", err);
@@ -67,8 +69,8 @@ const renderData = () => {
         const fieldName = field.id;
         const weatherInfoValue = weatherInfo[fieldName];
 
-        if (!weatherInfoValue){
-            field.textContent = "N/A"
+        if (weatherInfoValue === null || weatherInfoValue === undefined){
+            field.textContent = "-";
         } else {
             field.textContent = weatherInfoValue;
         }   
@@ -78,6 +80,6 @@ const renderData = () => {
 searchBtn.addEventListener(("click"), () => {
     if (!searchBox.value) return;
 
-    saveWeatherData(searchBox.value).then(
-        () => renderData());
+    saveWeatherData(searchBox.value)
+        .then(() => renderData());
 })
