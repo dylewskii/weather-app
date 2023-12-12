@@ -40,7 +40,8 @@ img, picture, svg, video {
 /* --- Base --- */
 body {
     display: grid;
-    grid-template-rows: 10% 10% 60% 15% 5%;
+    grid-template-rows: 10% 5% 70% 10% 5%;
+    row-gap: 10px;
     background-color: var(--dark-mode-bg-color);
 }
 
@@ -57,7 +58,9 @@ p, a, input, img {
 /* --- Main --- */
 header {
     grid-row: 1;
-    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    margin: 0rem 2rem;
 }
 
 header h1 {
@@ -69,7 +72,6 @@ header h1 {
     grid-row: 2;
     display: flex;
     justify-content: center;
-    margin: 1.5rem 0;
 }
 
 .searchbox {
@@ -116,8 +118,9 @@ header h1 {
     border: none;
     border-radius: 20px;
     color: var(--main-font-color);
-    background: linear-gradient(to right, rgb(248,98,227), rgb(61,99,241));
+    /* background: linear-gradient(to right, rgb(248,98,227), rgb(61,99,241)); */
     /* background: linear-gradient(to right, rgb(254,122,61), rgb(255,55,53)); */
+    background: linear-gradient(to right, rgb(248, 144, 96), rgb(255,55,53));
     z-index: 100;
     cursor: pointer;
 }
@@ -131,12 +134,13 @@ header h1 {
 }
 
 .current-panel {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 25% 40% 35%;
     position: absolute;
     top: 0;
-    display: grid;
-    grid-template-columns: 50% 50%;
     width: 90%;
-    height: 38%;
+    height: 57%;
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 25px;
@@ -147,24 +151,85 @@ header h1 {
     -webkit-backdrop-filter: blur(14.5px);
 }
 
-.icon-box {
+.city-box {
+    display: grid;
+    place-items: center;
     grid-column: 1;
+    grid-row: 1;
+} 
+
+#city {
+    font-size: 2rem;
+}
+
+#region {
+    font-size: 0.8rem;
+}
+
+.temp-box {
+    display: grid;
+    place-items: center;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#description {
+    font-size: 0.75rem;
+}
+
+.degrees {
+    font-size: 6rem;
+}
+
+.icon-box {
+    grid-column: span 2;
+    grid-row: span 2;
     display: grid;
     place-items: center;
 }
 
 .icon {
-    width: 125px;
-    height: 125px;
+    width: 140px;
+    height: 140px;
 }
 
-.info-box {
+.calendar-box {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(3, 33%);
+    grid-gap: 3px;
+    grid-row: 3;
+    grid-column: span 3;
+    padding: 0.1rem;
+    width: 100%;
+}
+
+.day-box-one {
+    grid-column: 1;
+}
+
+.day-box-two {
     grid-column: 2;
 }
 
-.info__temp {
-    font-size: 7rem;
+.day-box-three {
+    grid-column: 3;
 }
+
+.day-box {
+    height: 100%;
+    width: 70%;
+    background-color: black;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+}
+
+.selected {
+    background-color: hsl(0, 0%, 16%);
+}
+
+/* ------------- */
 
 .details-panel {
     position: absolute;
@@ -174,7 +239,7 @@ header h1 {
     grid-template-columns: repeat(3, 33%);
     grid-template-rows: repeat(2, 50%);
     width: 90%;
-    height: 59%;
+    height: 40%;
     padding: 1rem;
     border-radius: 25px;
     background-color: rgb(40,40,40);

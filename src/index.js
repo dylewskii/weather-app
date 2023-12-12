@@ -64,7 +64,7 @@ const saveWeatherData = async (city) => {
 }
 
 const renderData = () => {
-    const fields = [description, temperature, airQuality, pressure, uv, precipitation, wind, visibility, sunrise, sunset];
+    const fields = [description, temperature, uv, airQuality, pressure, visibility, precipitation, wind, sunrise, sunset];
     fields.forEach((field) => {
         const fieldName = field.id;
         const weatherInfoValue = weatherInfo[fieldName];
