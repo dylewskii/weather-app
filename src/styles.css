@@ -229,8 +229,6 @@ header h1 {
     background-color: hsl(0, 0%, 16%);
 }
 
-/* ------------- */
-
 .details-panel {
     position: absolute;
     bottom: 0;
@@ -252,30 +250,48 @@ header h1 {
     align-items: center;
 }
 
-.details-box > p:first-of-type {
-    color: var(--main-font-color);
+.details-box > p:first-of-type,
+.details-box > p > span {
+    /* color: var(--main-font-color); */
+    color: rgb(248, 144, 96);
 }
 
 .details-box > p:last-child {
     color: var(--secondary-font-color);
 }
 
-.sun-info-wrapper {
+.astrology-wrapper {
     grid-row: 4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
 }
 
-.sun-info {
+.astrology-panel {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 25px;
-    background-color: rgb(40,40,40);
+    justify-content: space-between;
     width: 90%;
-    height: 85%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+.sunrise-box, .sunset-box {
+    display: grid;
+    place-items: center;
+    background-color: rgb(40,40,40);
+    width: 45%;
+    height: 70%;
+    border-radius: 25px;
+}
+
+.sunrise-box > p:first-child,
+.sunset-box > p:first-child {
+    color: var(--secondary-font-color);
+}
+
+.sunrise-box > p:last-child,
+.sunset-box > p:last-child {
+    color: rgb(248, 144, 96);
+    font-size: 1.1rem;
 }
 
 footer {
