@@ -6,13 +6,18 @@ import search from "./assets/icons/search.png";
 // Search
 const searchBox = document.getElementById("search");
 const searchBtn = document.querySelector(".search-btn");
+
 // 3 Day Forecast Cards
-const dayOneField = document.querySelector(".day-one__temp");
+// const dayOneTitle = document.querySelector(".day-one__title");
+const dayOneTemp = document.querySelector(".day-one__temp");
 const dayOneImg = document.querySelector(".day-one__img");
-const dayTwoField = document.querySelector(".day-two__temp");
+const dayTwoTitle = document.querySelector(".day-two__title")
+const dayTwoTemp = document.querySelector(".day-two__temp");
 const dayTwoImg = document.querySelector(".day-two__img");
-const dayThreeField = document.querySelector(".day-three__temp");
+const dayThreeTitle = document.querySelector(".day-three__title")
+const dayThreeTemp = document.querySelector(".day-three__temp");
 const dayThreeImg = document.querySelector(".day-three__img");
+
 // Weather Information Fields
 const iconField = document.getElementById("icon");
 const cityField = document.getElementById("city");
@@ -27,9 +32,21 @@ const windField = document.getElementById("wind");
 const visibilityField = document.getElementById("visibility");
 const sunriseField = document.getElementById("sunrise");
 const sunsetField = document.getElementById("sunset");
-// Date
-const date = new Date();
 
+// Returns formatted date for specififed offset from current date 
+const formatDate = (offset) => {
+    const date = new Date();
+    date.setDate(date.getDate() + offset);
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "short" });
+    return `${day} ${month}`;
+};
+
+// const today = formatDate(0);
+const tomorrow = formatDate(1);
+const overmorrow = formatDate(2);
+
+// Object to store weather data
 const weatherInfo = {
     city: null,
     region: null,
@@ -53,7 +70,7 @@ const weatherInfo = {
 };
 
 const getWeatherData = async (city) => {
-    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=111111111&q=${city}&aqi=yes&days=3`;
+    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=1111111111&q=${city}&aqi=yes&days=3`;
     const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
     const forecastWeatherData = await forecastWeatherResponse.json();
     console.log(forecastWeatherData)
@@ -103,15 +120,17 @@ const renderData = () => {
             field.textContent = weatherInfoValue;
         }
     })
+    
     iconField.src = `${weatherInfo.dayOneIcon}`;
-
-    dayOneField.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
+    dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
     dayOneImg.src = `${weatherInfo.dayOneIcon}`;
 
-    dayTwoField.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
+    dayTwoTitle.textContent = tomorrow;
+    dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
     dayTwoImg.src = `${weatherInfo.dayTwoIcon}`;
 
-    dayThreeField.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
+    dayThreeTitle.textContent = overmorrow;
+    dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
     dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
 }
 
