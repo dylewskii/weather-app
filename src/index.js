@@ -70,7 +70,7 @@ const weatherInfo = {
 };
 
 const getWeatherData = async (city) => {
-    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=1111111111&q=${city}&aqi=yes&days=3`;
+    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=111111111&q=${city}&aqi=yes&days=3`;
     const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
     const forecastWeatherData = await forecastWeatherResponse.json();
     console.log(forecastWeatherData)
@@ -120,7 +120,7 @@ const renderData = () => {
             field.textContent = weatherInfoValue;
         }
     })
-    
+
     iconField.src = `${weatherInfo.dayOneIcon}`;
     dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
     dayOneImg.src = `${weatherInfo.dayOneIcon}`;
@@ -140,3 +140,9 @@ searchBtn.addEventListener(("click"), () => {
     saveWeatherData(searchBox.value)
         .then(() => renderData());
 })
+
+// Display London data on first page load
+// document.addEventListener("DOMContentLoaded", () => {
+//     saveWeatherData("london")
+//         .then(() => renderData());
+// })
