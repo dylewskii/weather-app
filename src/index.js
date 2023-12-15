@@ -1,7 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import "./styles.css";
-// eslint-disable-next-line no-unused-vars
 import search from "./assets/icons/search.png";
+import sunrise from "./assets/icons/sunrise.png"
+import sunset from "./assets/icons/sunset.png"
+import newMoon from "./assets/icons/new-moon.png";
+import waxingCrescent from "./assets/icons/waxing-crescent.png";
+import firstQuarter from "./assets/icons/first-quarter.png";
+import waxingGibbous from "./assets/icons/waxing-gibbous.png";
+import fullMoon from "./assets/icons/full-moon.png";
+import waningGibbous from "./assets/icons/waning-gibbous.png";
+import lastQuarter from "./assets/icons/last-quarter.png";
+import waningCrescent from "./assets/icons/waning-crescent.png";
 
 // Search
 const searchBox = document.getElementById("search");
@@ -32,6 +42,8 @@ const windField = document.getElementById("wind");
 const visibilityField = document.getElementById("visibility");
 const sunriseField = document.getElementById("sunrise");
 const sunsetField = document.getElementById("sunset");
+const moonriseField = document.getElementById("moonrise");
+const moonsetField = document.getElementById("moonset");
 
 // Returns formatted date for specififed offset from current date 
 const formatDate = (offset) => {
@@ -60,6 +72,9 @@ const weatherInfo = {
     visibility: null,
     sunrise: null,
     sunset: null,
+    moonrise: null,
+    moonset: null,
+    moonphase: null,
     icon: null,
     dayOneTemp: null,
     dayOneIcon: null,
@@ -70,7 +85,7 @@ const weatherInfo = {
 };
 
 const getWeatherData = async (city) => {
-    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=111111111&q=${city}&aqi=yes&days=3`;
+    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=11111111&q=${city}&aqi=yes&days=3`;
     const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
     const forecastWeatherData = await forecastWeatherResponse.json();
     console.log(forecastWeatherData)
@@ -82,6 +97,9 @@ const saveWeatherData = async (city) => {
     await getWeatherData(city)
         .then((data) => {
             console.log(data)
+            let moonphase = data.forecast.forecastday[0].astro.moon_phase;
+            moonphase = moonphase.replace(/\s+/g, "-").toLowerCase();
+
             weatherInfo.city = data.location.name;
             weatherInfo.region = data.location.region;
             weatherInfo.description = data.current.condition.text;
@@ -94,6 +112,9 @@ const saveWeatherData = async (city) => {
             weatherInfo.visibility = data.current.vis_km;
             weatherInfo.sunrise = data.forecast.forecastday[0].astro.sunrise;
             weatherInfo.sunset = data.forecast.forecastday[0].astro.sunset;
+            weatherInfo.moonrise = data.forecast.forecastday[0].astro.moonrise;
+            weatherInfo.moonset = data.forecast.forecastday[0].astro.moonset;
+            weatherInfo.moonphase = moonphase;
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
             weatherInfo.dayOneIcon = weatherInfo.icon;
@@ -109,7 +130,7 @@ const saveWeatherData = async (city) => {
 }
 
 const renderData = () => {
-    const fields = [cityField, regionField, temperatureField, descriptionField, uvField, airQualityField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField];
+    const fields = [cityField, regionField, temperatureField, descriptionField, uvField, airQualityField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField, moonriseField, moonsetField];
     fields.forEach((field) => {
         const fieldName = field.id;
         const weatherInfoValue = weatherInfo[fieldName];
@@ -132,6 +153,11 @@ const renderData = () => {
     dayThreeTitle.textContent = overmorrow;
     dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
     dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
+
+    const allCurrentMoons = document.querySelectorAll(".current-moon");
+    allCurrentMoons.forEach(moon => moon.classList.remove("current-moon"));
+    const matchingMoon = document.getElementById(`${weatherInfo.moonphase}`);
+    matchingMoon.classList.add("current-moon");
 }
 
 searchBtn.addEventListener(("click"), () => {
