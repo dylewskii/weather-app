@@ -100,33 +100,56 @@
         </div>
     </div>
 
-    <div class="extras-wrapper">
-        <div class="extras-panel">
-            <div class="extras-box hours-box">
-                <div class="day-box day-box-one">
-                    <p class="day-one__title">12:00</p>
-                    <div><img class="day-one__img day-weather-icon" src="" alt="weather"></div>
-                    <p class="day-one__temp">0</p>
+    <div class="hourly-wrapper">
+        <div class="hourly-panel">
+                <div class="hour-box hour-box-one">
+                    <p class="hour-one__title">12:00</p>
+                    <div><img class="hour-one__img hour-weather-icon" src="" alt="weather"></div>
+                    <p class="hour-one__temp">0</p>
                 </div>
-                <div class="day-box day-box-two">
-                    <p class="day-two__title">02:00</p>
-                    <div><img class="day-two__img day-weather-icon" src="" alt="weather"></div>
-                    <p class="day-two__temp">0</p>
+                <div class="hour-box hour-box-two">
+                    <p class="hour-two__title">02:00</p>
+                    <div><img class="hour-two__img hour-weather-icon" src="" alt="weather"></div>
+                    <p class="hour-two__temp">0</p>
                 </div>
-                <div class="day-box day-box-three">
-                    <p class="day-three__title">04:00</p>
-                    <div><img class="day-three__img day-weather-icon" src="" alt="weather"></div>
-                    <p class="day-three__temp">0</p>
+                <div class="hour-box hour-box-three">
+                    <p class="hour-three__title">04:00</p>
+                    <div><img class="hour-three__img hour-weather-icon" src="" alt="weather"></div>
+                    <p class="hour-three__temp">0</p>
                 </div>
-                <div class="day-box day-box-four">
-                    <p class="day-four__title">04:00</p>
-                    <div><img class="day-three__img day-weather-icon" src="" alt="weather"></div>
-                    <p class="day-three__temp">0</p>
+                <div class="hour-box hour-box-four">
+                    <p class="hour-four__title">04:00</p>
+                    <div><img class="hour-three__img hour-weather-icon" src="" alt="weather"></div>
+                    <p class="hour-three__temp">0</p>
                 </div>
             </div>
-            <div class="extras-box">
-                <h6>CHANCE OF RAIN GRAPH</h6>
+        </div>
+    </div>
+
+    <div class="rainfall-wrapper">
+        <div class="rainfall-panel">
+            <div class="percentage-range">
+                <p>0%</p>
+                <p>50%</p>
+                <p>100%</p>
             </div>
+            <!-- <div class="rainfall-hours"> -->
+            <label id="rainfall-hour-one" for="rainfall-data-one">10:00</label>
+            <label id="rainfall-hour-two" for="rainfall-data-two">12:00</label>
+            <label id="rainfall-hour-three" for="rainfall-data-three">14:00</label>
+            <label id="rainfall-hour-four" for="rainfall-data-four">16:00</label>
+            <label id="rainfall-hour-five" for="rainfall-data-five">18:00</label>
+            <label id="rainfall-hour-six" for="rainfall-data-six">20:00</label>
+            <!-- </div> -->
+
+            <!-- <div class="rainfall-data"> -->
+            <input type="range" name="rainfall-data-one" id="rainfall-data-one" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <input type="range" name="rainfall-data-two" id="rainfall-data-two" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <input type="range" name="rainfall-data-three" id="rainfall-data-three" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <input type="range" name="rainfall-data-four" id="rainfall-data-four" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <input type="range" name="rainfall-data-five" id="rainfall-data-five" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <input type="range" name="rainfall-data-six" id="rainfall-data-six" orient="vertical" min="0" max="100" step="1" value="" disabled>
+            <!-- </div> -->
         </div>
     </div>
 

@@ -49,7 +49,7 @@ h1, h2, h3 {
     font-family: "heading-font";
 }
 
-p, a, input, img {
+p, a, input, img, label {
     color: var(--main-font-color);
     font-family: "body-font";
 }
@@ -242,7 +242,7 @@ header h1 {
     grid-column: 3;
 }
 
-.day-box {
+.day-box, .hour-box{
     height: 100%;
     width: 70%;
     background-color: black;
@@ -303,7 +303,7 @@ header h1 {
     /* <svg class="info" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg> */
 }
 
-.extras-wrapper {
+.rainfall-wrapper {
     display: none;
 }
 
@@ -397,29 +397,133 @@ a {
         grid-column: 2;
     }
 
-    .extras-wrapper {
+    .hourly-wrapper {
         display: flex;
         justify-content: center;
         grid-row: 5;
-        grid-column: span 2;
+        grid-column: 1;
     }
 
-    .extras-panel {
-        display: flex;
-        justify-content: space-between;
-        width: 95%;
-        border-radius: 25px;
-    }
-
-    .extras-box {
+    .hourly-panel {
         display: grid;
         place-items: center;
         grid-template-columns: repeat(4, 1fr);
         grid-auto-columns: 1fr;
         background-color: rgb(40,40,40);
-        width: 47%;
+        width: 90%;
         padding: 0.5rem;
         border-radius: 20px;
+    }
+
+    .rainfall-wrapper {
+        grid-row: 5;
+        grid-column: 2;
+        display: grid;
+        place-items: center;
+    }
+
+    .rainfall-panel {
+        display: grid;
+        grid-template-columns: 0.5fr repeat(6, 1fr);
+        grid-template-rows: 80% 20%;
+        background-color: rgb(40,40,40);
+        border-radius: 20px;
+        height: 100%;
+        width: 90%;
+        padding: 1rem 0.5rem 0 0.5rem;
+    }
+
+    .rainfall-hours {
+        grid-row: 2;
+        grid-column: 2 / -1;
+    }
+
+    .percentage-range {
+        grid-row: 1;
+        grid-column: 1;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    input[type=range] {
+        appearance: slider-vertical;
+        -webkit-appearance: slider-vertical;
+        width: 100%;
+        height: 90%;
+    }
+
+    #rainfall-hour-one {
+        grid-row: 2;
+        grid-column: 2;
+        margin: 0 auto;
+    }
+
+    #rainfall-data-one {
+        grid-row: 1;
+        grid-column: 2;
+        margin: 0 auto;
+    }
+
+    #rainfall-hour-two {
+        grid-row: 2;
+        grid-column: 3;
+        margin: 0 auto;
+    }
+
+    #rainfall-data-two {
+        grid-row: 1;
+        grid-column: 3;
+        margin: 0 auto;
+    }
+
+    #rainfall-hour-three {
+        grid-row: 2;
+        grid-column: 4;
+        margin: 0 auto;
+    }
+    
+    #rainfall-data-three {
+        grid-row: 1;
+        grid-column: 4;
+        margin: 0 auto;
+    }
+
+    #rainfall-hour-four {
+        grid-row: 2;
+        grid-column: 5;
+        margin: 0 auto;
+    }
+
+    #rainfall-data-four {
+        grid-row: 1;
+        grid-column: 5;
+        margin: 0 auto;
+    }
+
+    #rainfall-hour-five {
+        grid-row: 2;
+        grid-column: 6;
+        margin: 0 auto;
+    }
+
+    #rainfall-data-five {
+        grid-row: 1;
+        grid-column: 6;
+        margin: 0 auto;
+    }
+
+    #rainfall-hour-six {
+        grid-row: 2;
+        grid-column: 7;
+        margin: 0 auto;
+    }
+
+    #rainfall-data-six {
+        grid-row: 1;
+        grid-column: 7;
+        margin: 0 auto;
     }
 
     .sun-visual-wrapper {

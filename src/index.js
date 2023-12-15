@@ -85,7 +85,7 @@ const weatherInfo = {
 };
 
 const getWeatherData = async (city) => {
-    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=11111111&q=${city}&aqi=yes&days=3`;
+    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=d04037fa261e40e39e0142607230612&q=${city}&aqi=yes&days=3`;
     const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
     const forecastWeatherData = await forecastWeatherResponse.json();
     console.log(forecastWeatherData)
@@ -104,7 +104,7 @@ const saveWeatherData = async (city) => {
             weatherInfo.region = data.location.region;
             weatherInfo.description = data.current.condition.text;
             weatherInfo.temperature = data.current.temp_c;
-            weatherInfo.airQuality = data.current.air_quality["us-epa-index"];
+            weatherInfo.airQuality = data.current.air_quality["gb-defra-index"];
             weatherInfo.pressure = data.current.pressure_mb;
             weatherInfo.uv = data.current.uv;
             weatherInfo.precipitation = data.current.precip_mm;
@@ -130,7 +130,7 @@ const saveWeatherData = async (city) => {
 }
 
 const renderData = () => {
-    const fields = [cityField, regionField, temperatureField, descriptionField, uvField, airQualityField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField, moonriseField, moonsetField];
+    const fields = [cityField, regionField, temperatureField, descriptionField, uvField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField, moonriseField, moonsetField];
     fields.forEach((field) => {
         const fieldName = field.id;
         const weatherInfoValue = weatherInfo[fieldName];
@@ -141,6 +141,8 @@ const renderData = () => {
             field.textContent = weatherInfoValue;
         }
     })
+
+    airQualityField.textContent = weatherInfo.airQuality;
 
     iconField.src = `${weatherInfo.dayOneIcon}`;
     dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
