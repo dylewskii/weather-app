@@ -88,7 +88,7 @@ const getWeatherData = async (city) => {
     const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=d04037fa261e40e39e0142607230612&q=${city}&aqi=yes&days=3`;
     const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
     const forecastWeatherData = await forecastWeatherResponse.json();
-    console.log(forecastWeatherData)
+    console.log("Getting forecast weather data:", forecastWeatherData)
 
     return forecastWeatherData;
 }
@@ -96,10 +96,15 @@ const getWeatherData = async (city) => {
 const saveWeatherData = async (city) => {
     await getWeatherData(city)
         .then((data) => {
-            console.log(data)
+            console.log("Saving forecast weather data:", data);
             let moonphase = data.forecast.forecastday[0].astro.moon_phase;
             moonphase = moonphase.replace(/\s+/g, "-").toLowerCase();
 
+            // Current local hour rounded up
+            const currentLocalHour = data.location.localtime.split(" ")[1].split("").slice(0, 2).join("");
+            const localHourRounded = (parseInt(currentLocalHour, 10) + 1);
+
+            // Store relevant data
             weatherInfo.city = data.location.name;
             weatherInfo.region = data.location.region;
             weatherInfo.description = data.current.condition.text;
@@ -115,6 +120,22 @@ const saveWeatherData = async (city) => {
             weatherInfo.moonrise = data.forecast.forecastday[0].astro.moonrise;
             weatherInfo.moonset = data.forecast.forecastday[0].astro.moonset;
             weatherInfo.moonphase = moonphase;
+            weatherInfo.rainfallHours = [
+                localHourRounded,
+                localHourRounded + 1,
+                localHourRounded + 2,
+                localHourRounded + 3,
+                localHourRounded + 4,
+                localHourRounded + 5
+            ];
+            weatherInfo.chanceOfRainfall = [
+                data.forecast.forecastday[0].hour[localHourRounded].chance_of_rain, 
+                data.forecast.forecastday[0].hour[localHourRounded + 1].chance_of_rain,
+                data.forecast.forecastday[0].hour[localHourRounded + 2].chance_of_rain,
+                data.forecast.forecastday[0].hour[localHourRounded + 3].chance_of_rain,
+                data.forecast.forecastday[0].hour[localHourRounded + 4].chance_of_rain,
+                data.forecast.forecastday[0].hour[localHourRounded + 5].chance_of_rain
+            ];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
             weatherInfo.dayOneIcon = weatherInfo.icon;
@@ -122,6 +143,7 @@ const saveWeatherData = async (city) => {
             weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon;
             weatherInfo.dayThreeTemp = data.forecast.forecastday[2].day.avgtemp_c;
             weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon;
+            console.log(weatherInfo.rainfallHours);
         })
         .catch((err) => {
             console.log("Error Retrieving Weather Data", err);
@@ -130,7 +152,10 @@ const saveWeatherData = async (city) => {
 }
 
 const renderData = () => {
+    const rainfallTimeFields = document.querySelectorAll(".rainfall-hour");
+    const rainfallDataFields = document.querySelectorAll(".rainfall-data");
     const fields = [cityField, regionField, temperatureField, descriptionField, uvField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField, moonriseField, moonsetField];
+    
     fields.forEach((field) => {
         const fieldName = field.id;
         const weatherInfoValue = weatherInfo[fieldName];
@@ -142,6 +167,16 @@ const renderData = () => {
         }
     })
 
+    // Set each time field from hour 1 - hour 6
+    rainfallTimeFields.forEach((field, i) => {
+        field.textContent = `${weatherInfo.rainfallHours[i]}:00`;
+    })
+
+    // Set each range bar value according to % chance of rain
+    rainfallDataFields.forEach((field, i) => {
+        field.value = weatherInfo.chanceOfRainfall[i];
+    })
+    
     airQualityField.textContent = weatherInfo.airQuality;
 
     iconField.src = `${weatherInfo.dayOneIcon}`;
