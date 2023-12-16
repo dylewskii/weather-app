@@ -204,6 +204,15 @@ searchBtn.addEventListener(("click"), () => {
         .then(() => renderData());
 })
 
+const timeframeControls = document.querySelector(".timeframe-controls");
+timeframeControls.addEventListener(("click"), (e) => {
+    const activeBtns = document.querySelectorAll(".active");
+    if (e.target.classList.contains("timeframe-btn")){
+        activeBtns.forEach((button) => {button.classList.remove("active")})
+        e.target.classList.toggle("active");
+    }
+})
+
 // Display London data on first page load
 // document.addEventListener("DOMContentLoaded", () => {
 //     saveWeatherData("london")
