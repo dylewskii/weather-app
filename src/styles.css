@@ -134,7 +134,7 @@ header h1 {
 
 .location-box {
     width: 90%;
-    padding: 0 0 0 0.5rem;
+    padding: 0 1rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -143,6 +143,21 @@ header h1 {
 #location-pin {
     height: 1rem;
     width: 1rem;
+}
+
+.timezone-wrapper {
+    grid-row: 3;
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.timezone-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 90%;
+    padding: 0 1rem;
 }
 
 #city {
@@ -462,16 +477,47 @@ a {
         border: none;
         width: 50%;
         border-radius: 20px;
-        background-color: grey;
+        background-color: hsl(0, 0%, 50%, 0.392);
         color: black;
         cursor: pointer;
     }
+
     .timeframe-btn {
         transition: 1s ease-in-out;
     }
 
     .active {
         background: linear-gradient(to right, rgb(248, 144, 96), rgb(255,55,53));
+    }
+
+    .timeframe-box-one,
+    .timeframe-box-two,
+    .timeframe-box-three,
+    .timeframe-box-four {
+        display: grid;
+        background-color: hsl(0, 0%, 50%, 0.392);
+        height: 90%;
+        width: 70%;
+    }
+
+    .timeframe-box-one {
+        grid-row: 2;
+        grid-column: 1;
+    }
+
+    .timeframe-box-two {
+        grid-row: 2;
+        grid-column: 2;
+    }
+
+    .timeframe-box-three {
+        grid-row: 2;
+        grid-column: 3;
+    }
+
+    .timeframe-box-four {
+        grid-row: 2;
+        grid-column: 4;
     }
 
     .rainfall-wrapper {

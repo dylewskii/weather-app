@@ -29,6 +29,7 @@ const dayThreeTemp = document.querySelector(".day-three__temp");
 const dayThreeImg = document.querySelector(".day-three__img");
 
 // Weather Information Fields
+const localTimezoneField = document.getElementById("local-timezone");
 const iconField = document.getElementById("icon");
 const cityField = document.getElementById("city");
 const regionField = document.getElementById("region");
@@ -75,6 +76,7 @@ const weatherInfo = {
     moonrise: null,
     moonset: null,
     moonphase: null,
+    localTimezone: null,
     icon: null,
     dayOneTemp: null,
     dayOneIcon: null,
@@ -120,6 +122,7 @@ const saveWeatherData = async (city) => {
             weatherInfo.moonrise = data.forecast.forecastday[0].astro.moonrise;
             weatherInfo.moonset = data.forecast.forecastday[0].astro.moonset;
             weatherInfo.moonphase = moonphase;
+            weatherInfo.localTimezone = data.location.localtime;
             weatherInfo.rainfallHours = [
                 localHourRounded,
                 localHourRounded + 1,
@@ -129,12 +132,12 @@ const saveWeatherData = async (city) => {
                 localHourRounded + 5
             ];
             weatherInfo.chanceOfRainfall = [
-                data.forecast.forecastday[0].hour[localHourRounded].chance_of_rain, 
-                data.forecast.forecastday[0].hour[localHourRounded + 1].chance_of_rain,
-                data.forecast.forecastday[0].hour[localHourRounded + 2].chance_of_rain,
-                data.forecast.forecastday[0].hour[localHourRounded + 3].chance_of_rain,
-                data.forecast.forecastday[0].hour[localHourRounded + 4].chance_of_rain,
-                data.forecast.forecastday[0].hour[localHourRounded + 5].chance_of_rain
+                // data.forecast.forecastday[0].hour[localHourRounded].chance_of_rain, 
+                // data.forecast.forecastday[0].hour[localHourRounded + 1].chance_of_rain,
+                // data.forecast.forecastday[0].hour[localHourRounded + 2].chance_of_rain,
+                // data.forecast.forecastday[0].hour[localHourRounded + 3].chance_of_rain,
+                // data.forecast.forecastday[0].hour[localHourRounded + 4].chance_of_rain,
+                // data.forecast.forecastday[0].hour[localHourRounded + 5].chance_of_rain
             ];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
@@ -174,8 +177,10 @@ const renderData = () => {
 
     // Set each range bar value according to % chance of rain
     rainfallDataFields.forEach((field, i) => {
-        field.value = weatherInfo.chanceOfRainfall[i];
+        field.value = `${weatherInfo.chanceOfRainfall[i]}`;
     })
+
+    localTimezoneField.textContent = weatherInfo.localTimezone;
     
     airQualityField.textContent = weatherInfo.airQuality;
 
