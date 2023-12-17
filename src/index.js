@@ -46,6 +46,8 @@ const sunriseField = document.getElementById("sunrise");
 const sunsetField = document.getElementById("sunset");
 const moonriseField = document.getElementById("moonrise");
 const moonsetField = document.getElementById("moonset");
+const slotTitles = document.querySelectorAll(".slot-title");
+const slotTemps = document.querySelectorAll(".slot-temp");
 
 // Returns formatted date for specififed offset from current date 
 const formatDate = (offset) => {
@@ -58,7 +60,8 @@ const formatDate = (offset) => {
 
 // const today = formatDate(0);
 const tomorrow = formatDate(1);
-const overmorrow = formatDate(2);
+const dayTwo = formatDate(2);
+const dayThree = formatDate(3);
 
 // Object to store weather data
 const weatherInfo = {
@@ -124,7 +127,7 @@ const saveWeatherData = async (city) => {
             weatherInfo.moonset = data.forecast.forecastday[0].astro.moonset;
             weatherInfo.moonphase = moonphase;
             weatherInfo.localTimezone = data.location.localtime;
-            weatherInfo.rainfallHours = [];
+            weatherInfo.nextSixHours = [];
             weatherInfo.chanceOfRainfall = [];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
@@ -134,28 +137,28 @@ const saveWeatherData = async (city) => {
             weatherInfo.dayThreeTemp = data.forecast.forecastday[2].day.avgtemp_c;
             weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon;
 
-            // Appends next 6 hrs starting from current local time to rainfallHours array.
+            // Appends next 6 hrs starting from current local time to nextSixHours array.
             for (let i = 0; i < 6; i++){
                 if (localHourRounded + i > 23){
                     // Check if the hour falls into the following day.
                     const localHourNextDay = (((localHourRounded + i) % 23) - 1);
-                    weatherInfo.rainfallHours.push(localHourNextDay);
+                    weatherInfo.nextSixHours.push(localHourNextDay);
                 } else {
-                    weatherInfo.rainfallHours.push(localHourRounded + i)
+                    weatherInfo.nextSixHours.push(localHourRounded + i)
                 }
             }
-            console.log("rainfall hours: ", weatherInfo.rainfallHours )
+            console.log("next six hours: ", weatherInfo.nextSixHours )
 
-            // Appends chance of rain % nr for each hour within rainfallHours array.
-            for (let i = 0; i < weatherInfo.rainfallHours.length; i++){
-                if (weatherInfo.rainfallHours[0] > 18){
-                    if (weatherInfo.rainfallHours[i] < 18){
-                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[1].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+            // Appends chance of rain % nr for each hour within nextSixHours array.
+            for (let i = 0; i < weatherInfo.nextSixHours.length; i++){
+                if (weatherInfo.nextSixHours[0] > 18){
+                    if (weatherInfo.nextSixHours[i] < 18){
+                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[1].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
                     } else {
-                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
                     }
                 } else {
-                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
                 }
             }
 
@@ -184,12 +187,25 @@ const renderData = () => {
         }
     })
 
+    const followingDays = [];
+    slotTitles.forEach((title, i) => {
+        followingDays.push(formatDate(i + 1));
+        title.textContent = `${formatDate(i + 1)}`;
+    })
+
+    const numericalDates = followingDays.map(date => parseInt(date, 10));
+
+    // const firstFourHours = weatherInfo.nextSixHours.slice(0, 4);
+    // slotTitles.forEach((title, i) => {
+    //     title.textContent = `${weatherInfo.nextSixHours[i]}:00`;
+    // })
+
     // Set each time field from hour 1 - hour 6
     rainfallTimeFields.forEach((field, i) => {
-        if (weatherInfo.rainfallHours[i] < 10){
-            field.textContent = `0${weatherInfo.rainfallHours[i]}:00`;
+        if (weatherInfo.nextSixHours[i] < 10){
+            field.textContent = `0${weatherInfo.nextSixHours[i]}:00`;
         } else {
-            field.textContent = `${weatherInfo.rainfallHours[i]}:00`;
+            field.textContent = `${weatherInfo.nextSixHours[i]}:00`;
         }
     })
 
@@ -210,7 +226,7 @@ const renderData = () => {
     dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
     dayTwoImg.src = `${weatherInfo.dayTwoIcon}`;
 
-    dayThreeTitle.textContent = overmorrow;
+    dayThreeTitle.textContent = dayTwo;
     dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
     dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
 
