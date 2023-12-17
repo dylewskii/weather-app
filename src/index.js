@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 import "./styles.css";
 import search from "./assets/icons/search.png";
 import sunrise from "./assets/icons/sunrise.png"
@@ -140,9 +141,8 @@ const saveWeatherData = async (city) => {
             weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon;
             weatherInfo.dayThreeTemp = data.forecast.forecastday[2].day.avgtemp_c;
             weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon;
-            console.log(weatherInfo.rainfallHours);
 
-            // Appends next 6 hrs from current local time to rainfallHours array.
+            // Appends next 6 hrs starting from current local time to rainfallHours array.
             for (let i = 0; i < 6; i++){
                 if (localHourRounded + i > 23){
                     // Check if the hour falls into the following day.
@@ -154,14 +154,21 @@ const saveWeatherData = async (city) => {
             }
             console.log("rainfall hours: ", weatherInfo.rainfallHours )
 
+            // Appends chance of rain % nr for each hour within rainfallHours array.
+            for (let i = 0; i < weatherInfo.rainfallHours.length; i++){
+                if (weatherInfo.rainfallHours[0] > 18){
+                    if (weatherInfo.rainfallHours[i] < 18){
+                        weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[1].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                    } else {
+                        weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                    }
+                } else {
+                    weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                }
+            }
 
-            // for (let i = 0; i < 5; i++){
-            //     if (data.forecast.forecastday[0].hour[localHourRounded + i].chance_of_rain > 24){
-            //         weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[1].hour[localHourRounded + i].chance_of_rain)
-            //     } else {
-            //         weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[0].hour[localHourRounded + i].chance_of_rain)
-            //     }
-            // }
+            console.log("rainfall % chance for each hour: ", weatherInfo.chanceOfRainfallTest)
+
         })
         .catch((err) => {
             console.log("Error Retrieving Weather Data", err);
@@ -195,9 +202,9 @@ const renderData = () => {
     })
 
     // Set each range bar value according to % chance of rain
-    // rainfallDataFields.forEach((field, i) => {
-    //     field.value = `${weatherInfo.chanceOfRainfall[i]}`;
-    // })
+    rainfallDataFields.forEach((field, i) => {
+        field.value = `${weatherInfo.chanceOfRainfallTest[i]}`;
+    })
 
     localTimezoneField.textContent = weatherInfo.localTimezone;
     
