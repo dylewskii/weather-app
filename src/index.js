@@ -125,15 +125,7 @@ const saveWeatherData = async (city) => {
             weatherInfo.moonphase = moonphase;
             weatherInfo.localTimezone = data.location.localtime;
             weatherInfo.rainfallHours = [];
-            weatherInfo.chanceOfRainfallTest = [];
-            // weatherInfo.chanceOfRainfall = [
-            //     data.forecast.forecastday[0].hour[localHourRounded].chance_of_rain, 
-            //     data.forecast.forecastday[0].hour[localHourRounded + 1].chance_of_rain,
-            //     data.forecast.forecastday[0].hour[localHourRounded + 2].chance_of_rain,
-            //     data.forecast.forecastday[0].hour[localHourRounded + 3].chance_of_rain,
-            //     data.forecast.forecastday[0].hour[localHourRounded + 4].chance_of_rain,
-            //     data.forecast.forecastday[0].hour[localHourRounded + 5].chance_of_rain
-            // ];
+            weatherInfo.chanceOfRainfall = [];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
             weatherInfo.dayOneIcon = weatherInfo.icon;
@@ -158,16 +150,16 @@ const saveWeatherData = async (city) => {
             for (let i = 0; i < weatherInfo.rainfallHours.length; i++){
                 if (weatherInfo.rainfallHours[0] > 18){
                     if (weatherInfo.rainfallHours[i] < 18){
-                        weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[1].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[1].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
                     } else {
-                        weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
                     }
                 } else {
-                    weatherInfo.chanceOfRainfallTest.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
+                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.rainfallHours[i]].chance_of_rain);
                 }
             }
 
-            console.log("rainfall % chance for each hour: ", weatherInfo.chanceOfRainfallTest)
+            console.log("rainfall % chance for each hour: ", weatherInfo.chanceOfRainfall)
 
         })
         .catch((err) => {
@@ -203,7 +195,7 @@ const renderData = () => {
 
     // Set each range bar value according to % chance of rain
     rainfallDataFields.forEach((field, i) => {
-        field.value = `${weatherInfo.chanceOfRainfallTest[i]}`;
+        field.value = `${weatherInfo.chanceOfRainfall[i]}`;
     })
 
     localTimezoneField.textContent = weatherInfo.localTimezone;
