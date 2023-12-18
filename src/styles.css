@@ -483,7 +483,7 @@ a {
     .hourly-box-three,
     .hourly-box-four,
     .hourly-box-five,
-    .hourly-box-two {
+    .hourly-box-six {
         display: grid;
         background-color: hsl(0, 0%, 50%, 0.392);
         margin: 0 0.3rem;

@@ -241,7 +241,7 @@ const renderData = () => {
     })
 
     hourlyTitles.forEach((title, i) => {
-
+        title.textContent = `${weatherInfo.nextSixHours[i]}:00`;
     })
 
     // --- CHANCE OF RAINFALL PANEL ---
