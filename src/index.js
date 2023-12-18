@@ -132,6 +132,8 @@ const saveWeatherData = async (city) => {
             weatherInfo.moonphase = moonphase;
             weatherInfo.localTimezone = data.location.localtime;
             weatherInfo.nextSixHours = [];
+            weatherInfo.nextSixTemps = [];
+            weatherInfo.nextSixIcons = [];
             weatherInfo.chanceOfRainfall = [];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
             weatherInfo.dayIcons = [
@@ -155,6 +157,7 @@ const saveWeatherData = async (city) => {
                 data.forecast.forecastday[1].day.avgtemp_c,
                 data.forecast.forecastday[2].day.avgtemp_c
             ];
+
             // Appends next 6 hrs starting from current local time to nextSixHours array.
             for (let i = 0; i < 6; i++){
                 if (localHourRounded + i > 23){
@@ -167,21 +170,25 @@ const saveWeatherData = async (city) => {
             }
             console.log("next six hours: ", weatherInfo.nextSixHours )
 
-            // Appends chance of rain % nr for each hour within nextSixHours array.
-            for (let i = 0; i < weatherInfo.nextSixHours.length; i++){
-                if (weatherInfo.nextSixHours[0] > 18){
-                    if (weatherInfo.nextSixHours[i] < 18){
-                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[1].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
-                    } else {
-                        weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
-                    }
+            // Appends chance of rain % for each hour within nextSixHours array.
+            // Appends hourly temperatures (C) to nextSixTemps array.
+            for (let i = 0; i < weatherInfo.nextSixHours.length; i++) {
+                const currentHour = weatherInfo.nextSixHours[i];
+                const startingHour = weatherInfo.nextSixHours[0];
+              
+                if (currentHour >= startingHour) {
+                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[currentHour].chance_of_rain);
+                    weatherInfo.nextSixTemps.push(data.forecast.forecastday[0].hour[currentHour].temp_c);
+                    weatherInfo.nextSixIcons.push(data.forecast.forecastday[0].hour[currentHour].condition.icon);
                 } else {
-                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[0].hour[weatherInfo.nextSixHours[i]].chance_of_rain);
+                    weatherInfo.chanceOfRainfall.push(data.forecast.forecastday[1].hour[currentHour].chance_of_rain);
+                    weatherInfo.nextSixTemps.push(data.forecast.forecastday[1].hour[currentHour].temp_c);
+                    weatherInfo.nextSixIcons.push(data.forecast.forecastday[1].hour[currentHour].condition.icon);
                 }
             }
 
-            console.log("rainfall % chance for each hour: ", weatherInfo.chanceOfRainfall)
-
+            // console.log("rainfall % chance for each hour: ", weatherInfo.chanceOfRainfall)
+            // console.log("next six temps: ", weatherInfo.nextSixTemps);
         })
         .catch((err) => {
             console.log("Error Retrieving Weather Data", err);
@@ -225,12 +232,10 @@ const renderData = () => {
     })
 
     // --- DAILY/HOURLY PANEL ---
-    const followingDays = [];
+    // daily
     dailyTitles.forEach((title, i) => {
-        followingDays.push(formatDate(i + 1));
         title.textContent = `${formatDate(i + 1)}`;
     })
-    const numericalDates = followingDays.map(date => parseInt(date, 10));
 
     dailyIcons.forEach((icon, i) => {
         icon.src = `${weatherInfo.dailyIcons[i]}`
@@ -240,8 +245,17 @@ const renderData = () => {
         temp.textContent = weatherInfo.dailyAvgCelsius[i];
     })
 
+    // hourly
     hourlyTitles.forEach((title, i) => {
         title.textContent = `${weatherInfo.nextSixHours[i]}:00`;
+    })
+
+    hourlyIcons.forEach((icon, i) => {
+        icon.src = `${weatherInfo.nextSixIcons[i]}`;
+    })
+
+    hourlyTemps.forEach((hour, i) => {
+        hour.textContent = `${weatherInfo.nextSixTemps[i]}`;
     })
 
     // --- CHANCE OF RAINFALL PANEL ---

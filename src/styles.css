@@ -474,6 +474,10 @@ a {
         width: 100%;
     }
 
+    .hourly-slots {
+        overflow: scroll;
+    }
+
     .daily-box-one,
     .daily-box-two,
     .daily-box-three,
