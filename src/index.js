@@ -46,9 +46,12 @@ const sunriseField = document.getElementById("sunrise");
 const sunsetField = document.getElementById("sunset");
 const moonriseField = document.getElementById("moonrise");
 const moonsetField = document.getElementById("moonset");
-const slotTitles = document.querySelectorAll(".slot-title");
-const slotIcons = document.querySelectorAll(".slot-weather-icon");
-const slotTemps = document.querySelectorAll(".slot-temp");
+const dailyTitles = document.querySelectorAll(".daily-title");
+const dailyIcons = document.querySelectorAll(".daily-icon");
+const dailyTemps = document.querySelectorAll(".daily-temp");
+const hourlyTitles = document.querySelectorAll(".hourly-title");
+const hourlyIcons = document.querySelectorAll(".hourly-icon");
+const hourlyTemps = document.querySelectorAll(".hourly-temp");
 
 // Returns formatted date for specififed offset from current date 
 const formatDate = (offset) => {
@@ -131,6 +134,11 @@ const saveWeatherData = async (city) => {
             weatherInfo.nextSixHours = [];
             weatherInfo.chanceOfRainfall = [];
             weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
+            weatherInfo.dayIcons = [
+                weatherInfo.dayOneIcon = weatherInfo.icon,
+                weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon,
+                weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon
+            ]
             weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
             weatherInfo.dayOneIcon = weatherInfo.icon;
             weatherInfo.dayTwoTemp = data.forecast.forecastday[1].day.avgtemp_c;
@@ -182,6 +190,25 @@ const saveWeatherData = async (city) => {
 }
 
 const renderData = () => {
+    // --- LOCALTIMEZONE ---
+    localTimezoneField.textContent = weatherInfo.localTimezone;
+    
+    // ---  MAIN PANEL ---
+    iconField.src = `${weatherInfo.dayOneIcon}`;
+    dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
+    dayOneImg.src = `${weatherInfo.dayOneIcon}`;
+
+    dayTwoTitle.textContent = tomorrow;
+    dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
+    dayTwoImg.src = `${weatherInfo.dayTwoIcon}`;
+
+    dayThreeTitle.textContent = dayTwo;
+    dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
+    dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
+
+    // --- DETAILS PANEL ---
+    airQualityField.textContent = weatherInfo.airQuality;
+
     const rainfallTimeFields = document.querySelectorAll(".rainfall-hour");
     const rainfallDataFields = document.querySelectorAll(".rainfall-data");
     const fields = [cityField, regionField, temperatureField, descriptionField, uvField, pressureField, visibilityField, precipitationField, windField, sunriseField, sunsetField, moonriseField, moonsetField];
@@ -198,31 +225,27 @@ const renderData = () => {
     })
 
     // --- DAILY/HOURLY PANEL ---
-    // forecast.forecastday[0].day.condition.icon
     const followingDays = [];
-    slotTitles.forEach((title, i) => {
+    dailyTitles.forEach((title, i) => {
         followingDays.push(formatDate(i + 1));
         title.textContent = `${formatDate(i + 1)}`;
     })
-    
-    
     const numericalDates = followingDays.map(date => parseInt(date, 10));
 
-    slotIcons.forEach((icon, i) => {
+    dailyIcons.forEach((icon, i) => {
         icon.src = `${weatherInfo.dailyIcons[i]}`
     })
 
-    slotTemps.forEach((temp, i) => {
+    dailyTemps.forEach((temp, i) => {
         temp.textContent = weatherInfo.dailyAvgCelsius[i];
     })
-    // const firstFourHours = weatherInfo.nextSixHours.slice(0, 4);
-    // slotTitles.forEach((title, i) => {
-    //     title.textContent = `${weatherInfo.nextSixHours[i]}:00`;
-    // })
 
+    hourlyTitles.forEach((title, i) => {
+
+    })
 
     // --- CHANCE OF RAINFALL PANEL ---
-    // Set each time field from hour 1 - hour 6
+    // Set each time field from Hour 1 -> Hour 6
     rainfallTimeFields.forEach((field, i) => {
         if (weatherInfo.nextSixHours[i] < 10){
             field.textContent = `0${weatherInfo.nextSixHours[i]}:00`;
@@ -235,24 +258,6 @@ const renderData = () => {
     rainfallDataFields.forEach((field, i) => {
         field.value = `${weatherInfo.chanceOfRainfall[i]}`;
     })
-
-     // --- LOCALTIMEZONE ---
-    localTimezoneField.textContent = weatherInfo.localTimezone;
-    
-     // --- DETAILS PANEL ---
-    airQualityField.textContent = weatherInfo.airQuality;
-
-    iconField.src = `${weatherInfo.dayOneIcon}`;
-    dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
-    dayOneImg.src = `${weatherInfo.dayOneIcon}`;
-
-    dayTwoTitle.textContent = tomorrow;
-    dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
-    dayTwoImg.src = `${weatherInfo.dayTwoIcon}`;
-
-    dayThreeTitle.textContent = dayTwo;
-    dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
-    dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
 
      // --- MOON PANEL ---
     const allCurrentMoons = document.querySelectorAll(".current-moon");
@@ -269,11 +274,21 @@ searchBtn.addEventListener(("click"), () => {
 })
 
 const timeframeControls = document.querySelector(".timeframe-controls");
+const dailySlotsDiv = document.querySelector(".daily-slots");
+const dailyBtn = document.querySelector(".daily-btn");
+
+const hourlySlotsDiv = document.querySelector(".hourly-slots");
+const hourlyBtn = document.querySelector(".hourly-btn");
+
 timeframeControls.addEventListener(("click"), (e) => {
     const activeBtns = document.querySelectorAll(".active");
     if (e.target.classList.contains("timeframe-btn")){
-        activeBtns.forEach((button) => {button.classList.remove("active")})
+        activeBtns.forEach((button) => button.classList.remove("active"))
         e.target.classList.toggle("active");
+
+        const isDaily = e.target.textContent === "Daily";
+        dailySlotsDiv.className = isDaily ? "daily-slots" : "daily-slots hidden";
+        hourlySlotsDiv.className = isDaily ? "hourly-slots hidden" : "hourly-slots";
     }
 })
 

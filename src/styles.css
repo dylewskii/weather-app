@@ -147,14 +147,6 @@ header h1 {
     width: 1rem;
 }
 
-#city {
-    font-size: 1rem;
-}
-
-#region {
-    font-size: 0.7rem;
-}
-
 .timezone-wrapper {
     display: none;
 }
@@ -388,12 +380,8 @@ a {
         grid-column: span 2;
     }
 
-    #city {
-        font-size: 1.3rem;
-    }
-    
-    #region {
-        font-size: 1rem;
+    #city, #region {
+        font-size: 1.1rem;
     }
 
     .timezone-wrapper {
@@ -473,16 +461,12 @@ a {
         color: black;
         cursor: pointer;
     }
-
-    .timeframe-btn {
-        transition: 1s ease-in-out;
-    }
-
+    
     .active {
         background: linear-gradient(to right, rgb(248, 144, 96), rgb(255,55,53));
     }
 
-    .slots {
+    .daily-slots, .hourly-slots {
         grid-row: 2;
         grid-column: 1 / -1;
         display: flex;
@@ -490,10 +474,16 @@ a {
         width: 100%;
     }
 
-    .timeframe-box-one,
-    .timeframe-box-two,
-    .timeframe-box-three,
-    .timeframe-box-four {
+    .daily-box-one,
+    .daily-box-two,
+    .daily-box-three,
+    .daily-box-four, 
+    .hourly-box-one, 
+    .hourly-box-two, 
+    .hourly-box-three,
+    .hourly-box-four,
+    .hourly-box-five,
+    .hourly-box-two {
         display: grid;
         background-color: hsl(0, 0%, 50%, 0.392);
         margin: 0 0.3rem;
@@ -710,4 +700,8 @@ a {
         grid-row: -1;
         grid-column: span 2;
     }
+}
+
+.hidden {
+    display: none;
 }
