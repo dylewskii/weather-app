@@ -47,6 +47,7 @@ const sunsetField = document.getElementById("sunset");
 const moonriseField = document.getElementById("moonrise");
 const moonsetField = document.getElementById("moonset");
 const slotTitles = document.querySelectorAll(".slot-title");
+const slotIcons = document.querySelectorAll(".slot-weather-icon");
 const slotTemps = document.querySelectorAll(".slot-temp");
 
 // Returns formatted date for specififed offset from current date 
@@ -136,7 +137,16 @@ const saveWeatherData = async (city) => {
             weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon;
             weatherInfo.dayThreeTemp = data.forecast.forecastday[2].day.avgtemp_c;
             weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon;
-
+            weatherInfo.dailyIcons = [
+                data.forecast.forecastday[0].day.condition.icon,
+                data.forecast.forecastday[1].day.condition.icon,
+                data.forecast.forecastday[2].day.condition.icon
+            ];
+            weatherInfo.dailyAvgCelsius = [
+                data.forecast.forecastday[0].day.avgtemp_c,
+                data.forecast.forecastday[1].day.avgtemp_c,
+                data.forecast.forecastday[2].day.avgtemp_c
+            ];
             // Appends next 6 hrs starting from current local time to nextSixHours array.
             for (let i = 0; i < 6; i++){
                 if (localHourRounded + i > 23){
@@ -187,19 +197,31 @@ const renderData = () => {
         }
     })
 
+    // --- DAILY/HOURLY PANEL ---
+    // forecast.forecastday[0].day.condition.icon
     const followingDays = [];
     slotTitles.forEach((title, i) => {
         followingDays.push(formatDate(i + 1));
         title.textContent = `${formatDate(i + 1)}`;
     })
-
+    
+    
     const numericalDates = followingDays.map(date => parseInt(date, 10));
 
+    slotIcons.forEach((icon, i) => {
+        icon.src = `${weatherInfo.dailyIcons[i]}`
+    })
+
+    slotTemps.forEach((temp, i) => {
+        temp.textContent = weatherInfo.dailyAvgCelsius[i];
+    })
     // const firstFourHours = weatherInfo.nextSixHours.slice(0, 4);
     // slotTitles.forEach((title, i) => {
     //     title.textContent = `${weatherInfo.nextSixHours[i]}:00`;
     // })
 
+
+    // --- CHANCE OF RAINFALL PANEL ---
     // Set each time field from hour 1 - hour 6
     rainfallTimeFields.forEach((field, i) => {
         if (weatherInfo.nextSixHours[i] < 10){
@@ -214,8 +236,10 @@ const renderData = () => {
         field.value = `${weatherInfo.chanceOfRainfall[i]}`;
     })
 
+     // --- LOCALTIMEZONE ---
     localTimezoneField.textContent = weatherInfo.localTimezone;
     
+     // --- DETAILS PANEL ---
     airQualityField.textContent = weatherInfo.airQuality;
 
     iconField.src = `${weatherInfo.dayOneIcon}`;
@@ -230,6 +254,7 @@ const renderData = () => {
     dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
     dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
 
+     // --- MOON PANEL ---
     const allCurrentMoons = document.querySelectorAll(".current-moon");
     allCurrentMoons.forEach(moon => moon.classList.remove("current-moon"));
     const matchingMoon = document.getElementById(`${weatherInfo.moonphase}`);

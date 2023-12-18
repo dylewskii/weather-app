@@ -28,11 +28,13 @@ img, picture, svg, video {
 @font-face {
     font-family: "heading-font";
     src: url("./assets/fonts/Afacad-Bold.ttf");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "body-font";
     src: url("./assets/fonts/Afacad-VariableFont_wght.ttf");
+    font-display: swap;
 }
 
 /* --- Base --- */
@@ -145,27 +147,16 @@ header h1 {
     width: 1rem;
 }
 
-.timezone-wrapper {
-    grid-row: 3;
-    grid-column: 2;
-    display: flex;
-    justify-content: center;
-}
-
-.timezone-box {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    width: 90%;
-    padding: 0 1rem;
-}
-
 #city {
     font-size: 1rem;
 }
 
 #region {
     font-size: 0.7rem;
+}
+
+.timezone-wrapper {
+    display: none;
 }
 
 /* 3) Weather Main */
@@ -238,30 +229,16 @@ header h1 {
     grid-row: 3;
     grid-column: span 3;
 
-    display: grid;
+    display: flex;
     place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 3px;
-    padding: 0.1rem;
 }
 
-.day-box-one {
-    grid-column: 1;
-}
-
-.day-box-two {
-    grid-column: 2;
-}
-
-.day-box-three {
-    grid-column: 3;
-}
-
-.day-box, .timeframe-box{
+.day-box, .timeframe-box {
     height: 100%;
     width: 70%;
-    background-color: black;
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: 20px;
+    margin: 0 0.3rem;
     display: grid;
     place-items: center;
 }
@@ -419,6 +396,21 @@ a {
         font-size: 1rem;
     }
 
+    .timezone-wrapper {
+        grid-row: 3;
+        grid-column: 2;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .timezone-box {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 90%;
+        padding: 0 1rem;
+    }
+
     .day-box, .calendar-box {
         display: none;
     }
@@ -490,34 +482,21 @@ a {
         background: linear-gradient(to right, rgb(248, 144, 96), rgb(255,55,53));
     }
 
+    .slots {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        display: flex;
+        height: 90%;
+        width: 100%;
+    }
+
     .timeframe-box-one,
     .timeframe-box-two,
     .timeframe-box-three,
     .timeframe-box-four {
         display: grid;
         background-color: hsl(0, 0%, 50%, 0.392);
-        height: 90%;
-        width: 70%;
-    }
-
-    .timeframe-box-one {
-        grid-row: 2;
-        grid-column: 1;
-    }
-
-    .timeframe-box-two {
-        grid-row: 2;
-        grid-column: 2;
-    }
-
-    .timeframe-box-three {
-        grid-row: 2;
-        grid-column: 3;
-    }
-
-    .timeframe-box-four {
-        grid-row: 2;
-        grid-column: 4;
+        margin: 0 0.3rem;
     }
 
     .rainfall-wrapper {
@@ -713,7 +692,7 @@ a {
         margin: 0 5px;
     }
     
-    .rainfall-pane {
+    .rainfall-panel {
         padding: 1rem 0.5rem 0.5rem 0.5rem;
     }
 
