@@ -46,12 +46,19 @@ const sunriseField = document.getElementById("sunrise");
 const sunsetField = document.getElementById("sunset");
 const moonriseField = document.getElementById("moonrise");
 const moonsetField = document.getElementById("moonset");
+
+// Timeframe Panel Fields
 const dailyTitles = document.querySelectorAll(".daily-title");
 const dailyIcons = document.querySelectorAll(".daily-icon");
 const dailyTemps = document.querySelectorAll(".daily-temp");
 const hourlyTitles = document.querySelectorAll(".hourly-title");
 const hourlyIcons = document.querySelectorAll(".hourly-icon");
 const hourlyTemps = document.querySelectorAll(".hourly-temp");
+
+// Timeframe (daily/hourly) Controls
+const timeframeControls = document.querySelector(".timeframe-controls");
+const dailySlotsDiv = document.querySelector(".daily-slots");
+const hourlySlotsDiv = document.querySelector(".hourly-slots");
 
 // Returns formatted date for specififed offset from current date 
 const formatDate = (offset) => {
@@ -62,47 +69,29 @@ const formatDate = (offset) => {
     return `${day} ${month}`;
 };
 
-// const today = formatDate(0);
-const tomorrow = formatDate(1);
-const dayTwo = formatDate(2);
-const dayThree = formatDate(3);
-
 // Object to store weather data
-const weatherInfo = {
-    city: null,
-    region: null,
-    description: null,
-    temperature: null,
-    airQuality: null,
-    pressure: null,
-    uv: null,
-    precipitation: null,
-    wind: null,
-    visibility: null,
-    sunrise: null,
-    sunset: null,
-    moonrise: null,
-    moonset: null,
-    moonphase: null,
-    localTimezone: null,
-    icon: null,
-    dayOneTemp: null,
-    dayOneIcon: null,
-    dayTwoTemp: null,
-    dayTwoIcon: null,
-    dayThreeTemp: null,
-    dayThreeIcon: null
+const weatherInfo = {};
+
+// Retrieve data from Weather API
+const getWeatherData = async (city) => {
+    try {
+        const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=d04037fa261e40e39e0142607230612&q=${city}&aqi=yes&days=3`;
+        const forecastWeatherResponse = await fetch(forecastWeatherApi, { mode: "cors" });
+
+        if (!forecastWeatherResponse.ok) {
+            throw new Error(`Failed to fetch weather data. Status: ${forecastWeatherResponse.status}`);
+        }
+
+        const forecastWeatherData = await forecastWeatherResponse.json();
+        console.log("Getting forecast weather data:", forecastWeatherData);
+        return forecastWeatherData;
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
+        throw error;
+    }
 };
 
-const getWeatherData = async (city) => {
-    const forecastWeatherApi = `https://api.weatherapi.com/v1/forecast.json?key=d04037fa261e40e39e0142607230612&q=${city}&aqi=yes&days=3`;
-    const forecastWeatherResponse = await fetch(forecastWeatherApi, {mode: "cors"});
-    const forecastWeatherData = await forecastWeatherResponse.json();
-    console.log("Getting forecast weather data:", forecastWeatherData)
-
-    return forecastWeatherData;
-}
-
+// Save API data to weatherInfo Object.
 const saveWeatherData = async (city) => {
     await getWeatherData(city)
         .then((data) => {
@@ -196,22 +185,23 @@ const saveWeatherData = async (city) => {
     )
 }
 
+// Render Object data on screen.
 const renderData = () => {
     // --- LOCALTIMEZONE ---
     localTimezoneField.textContent = weatherInfo.localTimezone;
     
     // ---  MAIN PANEL ---
-    iconField.src = `${weatherInfo.dayOneIcon}`;
+    iconField.src = weatherInfo.dayOneIcon;
     dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
-    dayOneImg.src = `${weatherInfo.dayOneIcon}`;
+    dayOneImg.src = weatherInfo.dayOneIcon;
 
-    dayTwoTitle.textContent = tomorrow;
+    dayTwoTitle.textContent = formatDate(1);
     dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
-    dayTwoImg.src = `${weatherInfo.dayTwoIcon}`;
+    dayTwoImg.src = weatherInfo.dayTwoIcon;
 
-    dayThreeTitle.textContent = dayTwo;
+    dayThreeTitle.textContent = formatDate(2);
     dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
-    dayThreeImg.src = `${weatherInfo.dayThreeIcon}`;
+    dayThreeImg.src = weatherInfo.dayThreeIcon;
 
     // --- DETAILS PANEL ---
     airQualityField.textContent = weatherInfo.airQuality;
@@ -280,6 +270,7 @@ const renderData = () => {
     matchingMoon.classList.add("current-moon");
 }
 
+// Event Listeners
 searchBtn.addEventListener(("click"), () => {
     if (!searchBox.value) return;
 
@@ -287,16 +278,9 @@ searchBtn.addEventListener(("click"), () => {
         .then(() => renderData());
 })
 
-const timeframeControls = document.querySelector(".timeframe-controls");
-const dailySlotsDiv = document.querySelector(".daily-slots");
-const dailyBtn = document.querySelector(".daily-btn");
-
-const hourlySlotsDiv = document.querySelector(".hourly-slots");
-const hourlyBtn = document.querySelector(".hourly-btn");
-
 timeframeControls.addEventListener(("click"), (e) => {
     const activeBtns = document.querySelectorAll(".active");
-    if (e.target.classList.contains("timeframe-btn")){
+    if (e.target.matches(".timeframe-btn")){
         activeBtns.forEach((button) => button.classList.remove("active"))
         e.target.classList.toggle("active");
 
