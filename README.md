@@ -9,8 +9,8 @@ Live 👉 https://dylewskii.github.io/weather-app/
 - Utilise async functions.
 
 ## Final Outcome:
-![project outcome](src/assets/images/final-desktop.png)
-![project outcome](src/assets/final-mobile.png)
+![project desktop outcome](./src/assets/final-desktop.pngsrc/assets/images/final-desktop.png)
+![project mobile outcome](./src/assets/final-mobile.png)
 
 ## Future Improvements:
 - Display more data points (chance of snow, expand details panel etc).
