@@ -28,23 +28,19 @@ export const setMainWeatherInfo = (data) => {
     weatherInfo.moonset = data.forecast.forecastday[0].astro.moonset;
     weatherInfo.moonphase = moonphase;
     weatherInfo.localTimezone = data.location.localtime;
-    weatherInfo.icon = data.forecast.forecastday[0].day.condition.icon;
-    weatherInfo.dayIcons = [
-        weatherInfo.dayOneIcon = weatherInfo.icon,
-        weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon,
-        weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon
-    ];
+    weatherInfo.icon = data.current.condition.icon;
     weatherInfo.dayOneTemp = data.forecast.forecastday[0].day.avgtemp_c;
-    weatherInfo.dayOneIcon = weatherInfo.icon;
     weatherInfo.dayTwoTemp = data.forecast.forecastday[1].day.avgtemp_c;
     weatherInfo.dayTwoIcon = data.forecast.forecastday[1].day.condition.icon;
     weatherInfo.dayThreeTemp = data.forecast.forecastday[2].day.avgtemp_c;
     weatherInfo.dayThreeIcon = data.forecast.forecastday[2].day.condition.icon;
+    
     weatherInfo.dailyIcons = [
         data.forecast.forecastday[0].day.condition.icon,
         data.forecast.forecastday[1].day.condition.icon,
         data.forecast.forecastday[2].day.condition.icon
     ];
+
     weatherInfo.dailyAvgCelsius = [
         data.forecast.forecastday[0].day.avgtemp_c,
         data.forecast.forecastday[1].day.avgtemp_c,
@@ -54,6 +50,8 @@ export const setMainWeatherInfo = (data) => {
 
 // Appends next 6 hours starting from current local time to nextSixHours array.
 export const appendNextSixHours = (data) => {
+    weatherInfo.nextSixHours = [];
+
     const currentLocalHour = data.location.localtime.split(" ")[1].split("").slice(0, 2).join("");
     const localHourRounded = (parseInt(currentLocalHour, 10) + 1);
 
@@ -66,12 +64,14 @@ export const appendNextSixHours = (data) => {
             weatherInfo.nextSixHours.push(localHourRounded + i);
         }
     }
-    console.log("next six hours: ", weatherInfo.nextSixHours);
+    // console.log("next six hours: ", weatherInfo.nextSixHours);
 };
 
 // Appends chance of rain % for each hour within nextSixHours array.
 // Appends hourly temperatures (C) to nextSixTemps array.
 export const appendRainfallAndTemps = (data) => {
+    weatherInfo.chanceOfRainfall = [];
+
     for (let i = 0; i < weatherInfo.nextSixHours.length; i++) {
         const currentHour = weatherInfo.nextSixHours[i];
         const startingHour = weatherInfo.nextSixHours[0];
@@ -86,4 +86,8 @@ export const appendRainfallAndTemps = (data) => {
             weatherInfo.nextSixIcons.push(data.forecast.forecastday[1].hour[currentHour].condition.icon);
         }
     }
+
+    // console.log("next six icons", weatherInfo.nextSixIcons)
+    // console.log("next six temps", weatherInfo.nextSixTemps)
+    // console.log("chance of rainfall", weatherInfo.chanceOfRainfall)
 };

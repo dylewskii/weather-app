@@ -45,9 +45,9 @@ export default function renderData () {
     localTimezoneField.textContent = weatherInfo.localTimezone;
     
     // ---  MAIN PANEL ---
-    iconField.src = weatherInfo.dayOneIcon;
+    iconField.src = weatherInfo.icon;
     dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
-    dayOneImg.src = weatherInfo.dayOneIcon;
+    dayOneImg.src = weatherInfo.icon;
 
     dayTwoTitle.textContent = formatDate(1);
     dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
