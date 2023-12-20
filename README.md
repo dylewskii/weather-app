@@ -10,7 +10,7 @@ Live 👉 https://dylewskii.github.io/weather-app/
 
 ## Final Outcome:
 ![project outcome](src/assets/images/final-desktop.png)
-![project outcome](src/assets/images/final-mobile.png)
+![project outcome](src/assets/final-mobile.png)
 
 ## Future Improvements:
 - Display more data points (chance of snow, expand details panel etc).
