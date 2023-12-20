@@ -40,9 +40,8 @@ img, picture, svg, video {
 /* --- Base --- */
 body {
     display: grid;
-    grid-template-rows: 0.25fr 0.1fr 0.1fr minmax(270px, 1fr) 0.7fr 0.3fr 0.1fr;
-    /* grid-template-columns: repeat(autofill, minmax(250px, 2fr)); */
-    row-gap: 10px;
+    grid-template-rows: 0.2fr 0.1fr 0.1fr minmax(275px, 1fr) 0.7fr 0.7fr 0.7fr 0.3fr 0.1fr;
+    row-gap: 15px;
     background-color: var(--dark-mode-bg-color);
 }
 
@@ -56,9 +55,53 @@ p, a, input, img, label, button {
     font-family: "body-font";
 }
 
-/* 1) Header */
+/* Grid Layout */
 header {
     grid-row: 1;
+}
+
+.searchbox-wrapper {
+    grid-row: 2;
+}
+
+.location-wrapper {
+    grid-row: 3;
+}
+
+.weather-wrapper {
+    grid-row: 4;
+}
+
+.details-wrapper {
+    grid-row: 5;
+}
+
+.timeframe-wrapper {
+    grid-row: 6;
+}
+
+.rainfall-wrapper {
+    grid-row: 7;
+}
+
+.sun-astrology-wrapper {
+    grid-row: 8;
+}
+
+.moon-astrology-wrapper {
+    grid-row: 9;
+}
+
+footer {
+    grid-row: -1;
+}
+
+.timezone-wrapper {
+    display: none;
+}
+
+/* 1) Header */
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,7 +115,6 @@ header h1 {
 
 /* 2) Search */
 .searchbox-wrapper {
-    grid-row: 2;
     display: flex;
     justify-content: center;
 }
@@ -127,9 +169,8 @@ header h1 {
     cursor: pointer;
 }
 
-/* Location */
+/* 3) Location */
 .location-wrapper {
-    grid-row: 3;
     display: flex;
     justify-content: center;
 }
@@ -151,9 +192,8 @@ header h1 {
     display: none;
 }
 
-/* 3) Weather Main */
+/* 4) Main Weather Panel */
 .weather-wrapper {
-    grid-row: 4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,7 +201,7 @@ header h1 {
 
 .weather-panel {
     display: grid;
-    grid-template-columns: repeat(3, 33.33%);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 25% 35% 40%;
     width: 90%;
     height: 100%;
@@ -194,7 +234,7 @@ header h1 {
 }
 
 .degrees, #temperature {
-    font-size: 5.5rem;
+    font-size: 5rem;
 }
 
 .temp-box {
@@ -204,7 +244,7 @@ header h1 {
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .icon-box {
@@ -217,8 +257,8 @@ header h1 {
 }
 
 #icon {
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
 }
 
 .calendar-box {
@@ -230,14 +270,14 @@ header h1 {
 }
 
 .day-box, .timeframe-box {
+    display: grid;
+    place-items: center;
     height: 100%;
     width: 70%;
-    background-color: hsl(0, 0%, 16%);
+    background-color: hsl(0, 0%, 50%, 0.392);
     border-radius: 20px;
     margin: 0 0.3rem;
     padding-bottom: 2rem 0;
-    display: grid;
-    place-items: center;
 }
 
 .day-weather-icon {
@@ -246,7 +286,6 @@ header h1 {
 
 /* Details */
 .details-wrapper {
-    grid-row: 5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -282,32 +321,178 @@ header h1 {
     color: var(--secondary-font-color);
 }
 
-.timeframe-controls {
-    display: none;
-}
-
 .info {
     width: 15px;
     fill: var(--secondary-font-color);
 }
 
-.rainfall-wrapper, .timeframe-box{
-    display: none;
+/* Timeframe Toggle */
+.timeframe-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
-/* 4) Astrology */
-.sun-astrology-wrapper {
-    grid-row: 6;
+.timeframe-panel {
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 5fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-columns: 1fr;
+    background-color: rgb(40,40,40);
+    width: 90%;
+    padding: 0.5rem;
+    border-radius: 20px;
+}
+
+.timeframe-controls {
+    grid-row: 1;
+    grid-column: 2 / 4;
+    background-color: grey;
+    width: 100%;
+    height: 80% ;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.timeframe-controls > button {
+    border: none;
+    width: 50%;
+    border-radius: 20px;
+    background-color: hsl(0, 0%, 50%, 0.392);
+    color: black;
+    cursor: pointer;
+}
+
+.active {
+    background: linear-gradient(to top, rgb(248, 144, 96), rgb(255,55,53));
+}
+
+.daily-slots, .hourly-slots {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    display: flex;
+    height: 90%;
+    width: 100%;
+}
+
+.hourly-slots {
+    overflow: scroll;
+}
+
+/* Rainfall */
+.rainfall-wrapper {
     display: grid;
     place-items: center;
 }
 
-.sun-visual-panel {
-    display: none;
+.rainfall-panel {
+    display: grid;
+    grid-template-columns: 0.5fr repeat(6, 1fr);
+    grid-template-rows: 0.3fr auto 0.3fr;
+    background-color: rgb(40,40,40);
+    border-radius: 20px;
+    height: 100%;
+    width: 90%;
+    padding: 0.75rem 0.5rem 0.5rem 0.5rem;
 }
 
+.rainfall-hours {
+    grid-row: 2;
+    grid-column: 2 / -1;
+}
+
+.rainfall-title-box {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    margin: 0 auto;
+    padding-bottom: 0.2rem ;
+}
+
+.percentage-range-box {
+    grid-row: 2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+    height: 90%;
+}
+
+input[type=range] {
+    appearance: slider-vertical;
+    -webkit-appearance: slider-vertical;
+    width: 100%;
+    height: 90%;
+}
+
+.rainfall-hour, .rainfall-data {
+    margin: 0 auto;
+}
+
+#rainfall-hour-one {
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#rainfall-data-one {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+#rainfall-hour-two {
+    grid-row: 3;
+    grid-column: 3;
+}
+
+#rainfall-data-two {
+    grid-row: 2;
+    grid-column: 3;
+}
+
+#rainfall-hour-three {
+    grid-row: 3;
+    grid-column: 4;
+}
+
+#rainfall-data-three {
+    grid-row: 2;
+    grid-column: 4;
+}
+
+#rainfall-hour-four {
+    grid-row: 3;
+    grid-column: 5;
+}
+
+#rainfall-data-four {
+    grid-row: 2;
+    grid-column: 5;
+}
+
+#rainfall-hour-five {
+    grid-row: 3;
+    grid-column: 6;
+}
+
+#rainfall-data-five {
+    grid-row: 2;
+    grid-column: 6;
+}
+
+#rainfall-hour-six {
+    grid-row: 3;
+    grid-column: 7;
+}
+
+#rainfall-data-six {
+    grid-row: 2;
+    grid-column: 7;
+}
+
+/* 4) Astrology */
+.sun-astrology-wrapper,
 .moon-astrology-wrapper {
-    grid-row: 7;
     display: grid;
     place-items: center;
 }
@@ -317,6 +502,22 @@ header h1 {
     justify-content: space-between;
     width: 90%;
     border-radius: 25px;
+}
+
+.sun-visual-panel, 
+.moon-visual-panel {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    border-radius: 25px;
+}
+
+.sun-visual-box, 
+.moon-visual-box {
+    display: grid;
+    place-items: center;
+    width: 45%;
+    padding: 0.5rem 0;
 }
 
 .sunrise-box, .sunset-box, .astrology-box {
@@ -340,15 +541,18 @@ header h1 {
     font-size: 1.1rem;
 }
 
-.sun-visual-wrapper > *,
-.sun {
-    display: none;
+.sun-visual-panel, .moon-visual-panel {
+    display: flex;
 }
 
-.moon-astrology-visual > *,
-.moon {
-    display: none;
+.sun, .moon {
+    width: 20px;
+    height: 20px;
 }
+
+.moon:not(.current-moon) {
+    opacity: 0.1;
+} 
 
 /* 5) Footer */
 footer {
@@ -420,26 +624,27 @@ a {
         font-size: 1.2rem;
     }
 
-    .degrees, #temperature {
-        font-size: 7rem;
-        padding-left: 2rem;
-    }
-
     .temp-box {
-        /* grid-row: 2 / -1;
-        grid-column: 1 / 3; */
-
         grid-row: 2 / -1;
         grid-column: 2 / -1;
+        padding: 0 0 1rem 3rem;
     }
 
     .icon-box {
-        /* grid-row: 1 / -1;
-        grid-column: 3; */
-
         grid-row: 2 / -1;
         grid-column: 1 / 3;
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding-left: 1.5rem;
+    }
 
+    #icon {
+        width: 130px;
+        height: 130px;
+    }
+
+    #temperature, .degrees {
+        font-size: 5rem;
     }
 
     .details-wrapper {
@@ -448,213 +653,22 @@ a {
     }
 
     .timeframe-wrapper {
-        display: flex;
-        justify-content: center;
         grid-row: 5;
         grid-column: 1;
-    }
-
-    .timeframe-panel {
-        display: grid;
-        place-items: center;
-        grid-template-rows: 1fr 5fr;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-columns: 1fr;
-        background-color: rgb(40,40,40);
-        width: 90%;
-        padding: 0.5rem;
-        border-radius: 20px;
-    }
-
-    .timeframe-controls {
-        grid-row: 1;
-        grid-column: 2 / 4;
-        background-color: grey;
-        width: 100%;
-        height: 80% ;
-        border-radius: 20px;
-        display: flex;
-        justify-content: space-evenly;
-    }
-
-    .timeframe-controls > button {
-        border: none;
-        width: 50%;
-        border-radius: 20px;
-        background-color: hsl(0, 0%, 50%, 0.392);
-        color: black;
-        cursor: pointer;
-    }
-    
-    .active {
-        background: linear-gradient(to right, rgb(248, 144, 96), rgb(255,55,53));
-    }
-
-    .daily-slots, .hourly-slots {
-        grid-row: 2;
-        grid-column: 1 / -1;
-        display: flex;
-        height: 90%;
-        width: 100%;
-    }
-
-    .hourly-slots {
-        overflow: scroll;
-    }
-
-    .daily-box-one,
-    .daily-box-two,
-    .daily-box-three,
-    .daily-box-four, 
-    .hourly-box-one, 
-    .hourly-box-two, 
-    .hourly-box-three,
-    .hourly-box-four,
-    .hourly-box-five,
-    .hourly-box-six {
-        display: grid;
-        background-color: hsl(0, 0%, 50%, 0.392);
-        margin: 0 0.3rem;
     }
 
     .rainfall-wrapper {
         grid-row: 5;
         grid-column: 2;
-        display: grid;
-        place-items: center;
     }
 
-    .rainfall-panel {
-        display: grid;
-        grid-template-columns: 0.5fr repeat(6, 1fr);
-        grid-template-rows: 0.3fr auto 0.3fr;
-        background-color: rgb(40,40,40);
-        border-radius: 20px;
-        height: 100%;
-        width: 90%;
-        padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+    .sun-astrology-wrapper {
+        grid-row: 6;
     }
 
-    .rainfall-hours {
-        grid-row: 2;
-        grid-column: 2 / -1;
-    }
-
-    .rainfall-title-box {
-        grid-row: 1;
-        grid-column: 1 / -1;
-        margin: 0 auto;
-        padding-bottom: 0.2rem ;
-    }
-
-    .percentage-range-box {
-        grid-row: 2;
-        grid-column: 1;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: space-between;
-        align-items: center;
-        height: 90%;
-    }
-
-    input[type=range] {
-        appearance: slider-vertical;
-        -webkit-appearance: slider-vertical;
-        width: 100%;
-        height: 90%;
-    }
-
-    .rainfall-hour, .rainfall-data {
-        margin: 0 auto;
-    }
-
-    #rainfall-hour-one {
-        grid-row: 3;
-        grid-column: 2;
-    }
-
-    #rainfall-data-one {
-        grid-row: 2;
-        grid-column: 2;
-    }
-
-    #rainfall-hour-two {
-        grid-row: 3;
-        grid-column: 3;
-    }
-
-    #rainfall-data-two {
-        grid-row: 2;
-        grid-column: 3;
-    }
-
-    #rainfall-hour-three {
-        grid-row: 3;
-        grid-column: 4;
-    }
-    
-    #rainfall-data-three {
-        grid-row: 2;
-        grid-column: 4;
-    }
-
-    #rainfall-hour-four {
-        grid-row: 3;
-        grid-column: 5;
-    }
-
-    #rainfall-data-four {
-        grid-row: 2;
-        grid-column: 5;
-    }
-
-    #rainfall-hour-five {
-        grid-row: 3;
-        grid-column: 6;
-    }
-
-    #rainfall-data-five {
-        grid-row: 2;
-        grid-column: 6;
-    }
-
-    #rainfall-hour-six {
-        grid-row: 3;
-        grid-column: 7;
-    }
-
-    #rainfall-data-six {
-        grid-row: 2;
-        grid-column: 7;
-    }
-
-    .sun-visual-wrapper {
-        grid-row: 7;
-        grid-column: 1;
-
-        display: grid;
-        place-items: center;
-    }
-
-    .sun-visual-panel {
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        border-radius: 25px;
-    }
-
-    .sun-visual-box {
-        display: grid;
-        place-items: center;
-        width: 45%;
+    .sun-visual-box,
+    .moon-visual-box {
         padding: 1rem 0;
-        border-radius: 20px;
-    }
-
-    .sun {
-        display: block;
-        width: 30px;
-        height: 30px;
     }
 
     .moon-astrology-wrapper {
@@ -662,29 +676,9 @@ a {
         grid-column: 2;
     }
 
-    .moon-visual-panel {
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        border-radius: 25px;
-    }
-
-    .moon-visual-box {
-        display: grid;
-        place-items: center;
-        width: 45%;
-        padding: 1rem 0;
-        border-radius: 20px;
-    }
-
-    .moon {
-        display: block;
+    .moon, .sun {
         width: 30px;
         height: 30px;
-    }
-
-    .moon:not(.current-moon) {
-        opacity: 0.1;
     }
 
     footer {
@@ -710,29 +704,6 @@ a {
         grid-row: -1;
     }
 }
-
-/* @media (min-width: 1020px) {
-    body {
-        margin: 0 4rem;
-    }
-    
-    #day {
-        font-size: 4rem;
-    }
-    
-    #description {
-        font-size: 2rem;
-    }
-    
-    .degrees, #temperature {
-        font-size: 5.5rem;
-    }
-
-    footer {
-        grid-row: -1;
-        grid-column: span 2;
-    }
-} */
 
 .hidden {
     display: none;
