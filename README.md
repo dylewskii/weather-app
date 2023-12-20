@@ -1,6 +1,6 @@
 # weather-app
 
-Weatherio: Weather dashboard.
+Weatherio: A Weather dashboard powered by WeatherAPI.com
 
 Live 👉 https://dylewskii.github.io/weather-app/
 
@@ -9,11 +9,11 @@ Live 👉 https://dylewskii.github.io/weather-app/
 - Utilise async functions.
 
 ## Final Outcome:
-![project outcome](src/assets/images/weather-app-desktop.png)
-![project outcome](src/assets/images/weather-app-mobile.png)
+![project outcome](src/assets/images/final-desktop.png)
+![project outcome](src/assets/images/final-mobile.png)
 
 ## Future Improvements:
-- Display more data points.
+- Display more data points (chance of snow, expand details panel etc).
 - Improve error handling.
 
 ## Languages used:
@@ -25,3 +25,7 @@ Live 👉 https://dylewskii.github.io/weather-app/
 ## Credits:
 - Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
 
+Icons:
+- Moons <a href="https://www.flaticon.com/free-icons/moon" title="moon icons">Moon icons created by Freepik - Flaticon</a>
+- Sunset <a href="https://www.flaticon.com/free-icons/sunset" title="sunset icons">Sunset icons created by Icon Hubs - Flaticon</a>
+- Sunrise <a href="https://www.flaticon.com/free-icons/sunrise" title="sunrise icons">Sunrise icons created by Icon Hubs - Flaticon</a>
