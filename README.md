@@ -8,8 +8,10 @@ Live 👉 https://dylewskii.github.io/weather-app/
 - Use weatherapi to fetch and then display weather data.
 - Utilise async functions.
 
-## Final Outcome:
+## Desktop Version:
 ![project desktop outcome](./src/assets/final-desktop.png)
+
+## Mobile Version:
 ![project mobile outcome](./src/assets/final-mobile.png)
 
 ## Future Improvements:
