@@ -4,14 +4,14 @@ import formatDate from "./utils";
 
 // 3 Day Forecast Cards
 // const dayOneTitle = document.querySelector(".day-one__title");
-const dayOneTemp = document.querySelector(".day-one__temp");
-const dayOneImg = document.querySelector(".day-one__img");
-const dayTwoTitle = document.querySelector(".day-two__title");
-const dayTwoTemp = document.querySelector(".day-two__temp");
-const dayTwoImg = document.querySelector(".day-two__img");
-const dayThreeTitle = document.querySelector(".day-three__title");
-const dayThreeTemp = document.querySelector(".day-three__temp");
-const dayThreeImg = document.querySelector(".day-three__img");
+// const dayOneTemp = document.querySelector(".day-one__temp");
+// const dayOneImg = document.querySelector(".day-one__img");
+// const dayTwoTitle = document.querySelector(".day-two__title");
+// const dayTwoTemp = document.querySelector(".day-two__temp");
+// const dayTwoImg = document.querySelector(".day-two__img");
+// const dayThreeTitle = document.querySelector(".day-three__title");
+// const dayThreeTemp = document.querySelector(".day-three__temp");
+// const dayThreeImg = document.querySelector(".day-three__img");
 
 // Weather Information Fields
 const localTimezoneField = document.getElementById("local-timezone");
@@ -46,16 +46,16 @@ export default function renderData () {
     
     // ---  MAIN PANEL ---
     iconField.src = weatherInfo.icon;
-    dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
-    dayOneImg.src = weatherInfo.icon;
+    // dayOneTemp.innerHTML = `${weatherInfo.dayOneTemp} &deg;`;
+    // dayOneImg.src = weatherInfo.icon;
 
-    dayTwoTitle.textContent = formatDate(1);
-    dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
-    dayTwoImg.src = weatherInfo.dayTwoIcon;
+    // dayTwoTitle.textContent = formatDate(1);
+    // dayTwoTemp.innerHTML = `${weatherInfo.dayTwoTemp} &deg;`;
+    // dayTwoImg.src = weatherInfo.dayTwoIcon;
 
-    dayThreeTitle.textContent = formatDate(2);
-    dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
-    dayThreeImg.src = weatherInfo.dayThreeIcon;
+    // dayThreeTitle.textContent = formatDate(2);
+    // dayThreeTemp.innerHTML = `${weatherInfo.dayThreeTemp} &deg;`;
+    // dayThreeImg.src = weatherInfo.dayThreeIcon;
 
     // --- DETAILS PANEL ---
     airQualityField.textContent = weatherInfo.airQuality;
